@@ -5,34 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AttriRadar</title>
 <meta name="description" content="모자·옷 색·차 색·차종까지 구분해 경고음을 울리는 휴대폰 감시 에이전트">
-<meta name="theme-color" content="#edf0f3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#10161c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5f8fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1424" media="(prefers-color-scheme: dark)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 /* Layout: phone = camera stage on top, panels stacked below; >=920px = stage left (sticky), panels right */
 :root{
-  --bg:#edf0f3; --surface:#ffffff; --surface-2:#f4f6f8; --ink:#15202b; --muted:#566370; --line:#d4dae0;
-  --accent:#f0b400; --accent-ink:#1c1500; --accent-soft:#fbefc6;
-  --alarm:#c8233a; --alarm-soft:#fae2e5; --ok:#1b7a51; --ok-soft:#dbefe5; --focus:#2c62cf;
-  --stage:#0b0f13; --stage-ink:#e8edf1; --hud-bg:rgba(8,12,16,.68); --alarm-fill:#c8233a; --on-alarm:#ffffff;
-  --f-sans:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  --bg:#f5f8fc; --surface:#ffffff; --surface-2:#f0f4fa; --ink:#14213a; --muted:#5a6880; --line:#dbe3ee;
+  --accent:#2563eb; --accent-ink:#ffffff; --accent-soft:#e3ecfd;
+  --alarm:#d92d3a; --alarm-soft:#fde4e6; --ok:#15803d; --ok-soft:#dcf3e4; --focus:#1d4ed8;
+  --stage:#0b1220; --stage-ink:#e8eef8; --hud-bg:rgba(8,14,28,.7); --alarm-fill:#c8233a; --on-alarm:#ffffff;
+  --f-sans:"Pretendard Variable",Pretendard,system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#10161c; --surface:#18212a; --surface-2:#1f2a34; --ink:#e5eaef; --muted:#97a3af; --line:#2c3843;
-    --accent:#f4bd1f; --accent-ink:#1c1500; --accent-soft:#3a3016;
-    --alarm:#ff6170; --alarm-soft:#3d1a20; --ok:#4cc38f; --ok-soft:#163226; --focus:#7da6ff;
+    --bg:#0d1424; --surface:#151f33; --surface-2:#1b2740; --ink:#e6edf8; --muted:#9aa8c0; --line:#2a3854;
+    --accent:#5b8cff; --accent-ink:#0a1430; --accent-soft:#1c2c52;
+    --alarm:#ff6170; --alarm-soft:#3d1a20; --ok:#4cc38f; --ok-soft:#163226; --focus:#8fb0ff;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#10161c; --surface:#18212a; --surface-2:#1f2a34; --ink:#e5eaef; --muted:#97a3af; --line:#2c3843;
-  --accent:#f4bd1f; --accent-ink:#1c1500; --accent-soft:#3a3016;
-  --alarm:#ff6170; --alarm-soft:#3d1a20; --ok:#4cc38f; --ok-soft:#163226; --focus:#7da6ff;
+  --bg:#0d1424; --surface:#151f33; --surface-2:#1b2740; --ink:#e6edf8; --muted:#9aa8c0; --line:#2a3854;
+  --accent:#5b8cff; --accent-ink:#0a1430; --accent-soft:#1c2c52;
+  --alarm:#ff6170; --alarm-soft:#3d1a20; --ok:#4cc38f; --ok-soft:#163226; --focus:#8fb0ff;
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -54,7 +55,7 @@ img{max-width:100%}
   background:conic-gradient(from 0deg,color-mix(in srgb,var(--accent) 75%,transparent),transparent 80deg)}
 body[data-running="true"] .mark::after{opacity:1;animation:sweep 2.4s linear infinite}
 @keyframes sweep{to{transform:rotate(360deg)}}
-h1{font:600 1.12rem/1.1 var(--f-mono);letter-spacing:.07em;text-transform:uppercase;margin:0}
+h1{font:800 1.2rem/1.1 var(--f-sans);letter-spacing:.04em;text-transform:uppercase;margin:0}
 .sub{margin:3px 0 0;color:var(--muted);font-size:.82rem}
 .status{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--surface);
   border:1px solid var(--line);font:500 .78rem var(--f-mono);white-space:nowrap}
@@ -87,7 +88,7 @@ h1{font:600 1.12rem/1.1 var(--f-mono);letter-spacing:.07em;text-transform:upperc
 .ph-title{margin:0;font-weight:600;font-size:1rem;text-wrap:balance}
 .pipeline{list-style:none;margin:0;padding:0;display:grid;gap:8px;counter-reset:step}
 .pipeline li{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:baseline;counter-increment:step}
-.pipeline li::before{content:counter(step);grid-row:span 2;font:600 .72rem var(--f-mono);color:var(--stage);background:var(--accent);
+.pipeline li::before{content:counter(step);grid-row:span 2;font:600 .72rem var(--f-mono);color:var(--accent-ink);background:var(--accent);
   width:20px;height:20px;border-radius:50%;display:grid;place-items:center}
 .pipeline b{font-weight:600;font-size:.9rem}
 .pipeline span{font-size:.78rem;opacity:.75}
